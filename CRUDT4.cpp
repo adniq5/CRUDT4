@@ -27,6 +27,7 @@ int cariDataByNIM(const string& nim) {
     }
     return -1; // Data tidak ditemukan
 }
+
 void tampilkanMenu(){
 system("cls");
 cout << "\n=== Menu Aplikasi Data Mahasiswa ===\n";
@@ -65,6 +66,7 @@ void tampilkanData() {
         cout << "\nTidak ada data mahasiswa.\n";
         return;
     }
+
     cout << "\n=== Data Mahasiswa ===\n";
     cout << left << setw(15) << "NIM" 
         << setw(30) << "Nama"
@@ -72,6 +74,7 @@ void tampilkanData() {
         << setw(15) << "Tgl Lahir"
         << setw(5)  << "IPK" << endl;
     cout << string(100, '-') << endl;
+
     for (int i = 0; i <= pos; i++) {
         cout << left << setw(15) << dataMahasiswa[i].nim
             << setw(30) << dataMahasiswa[i].nama
@@ -81,6 +84,31 @@ void tampilkanData() {
     }
 }
 
+void updateData() {
+    system("cls");  // Clear screen sebelum update data
+    if (pos == -1) {
+        cout << "\nTidak ada data mahasiswa untuk diupdate.\n";
+        return;
+    }
+    string nim;
+    cout << "\nMasukkan NIM mahasiswa yang ingin diupdate: ";
+    cin.ignore(); // Menghindari masalah dengan buffer input
+    getline(cin, nim);
+    int index = cariDataByNIM(nim);
+    if (index != -1) {
+        cout << "\nMasukkan data baru untuk mahasiswa dengan NIM " << nim << ":\n";
+        cout << "Nama: ";
+        getline(cin, dataMahasiswa[index].nama);
+        cout << "Alamat: ";
+        getline(cin, dataMahasiswa[index].alamat);
+        cout << "Tanggal Lahir (DD/MM/YYYY): ";
+        getline(cin, dataMahasiswa[index].tanggalLahir);
+        cout << "IPK: ";
+        cin >> dataMahasiswa[index].ipk;
+    } else {
+        cout << "\nMahasiswa dengan NIM " << nim << " tidak ditemukan.\n";
+    }
+}
 
 int main() {
 char pl;
@@ -97,6 +125,7 @@ do
     tampilkanData();
     break;  
    case '3':
+   updateData();
     break;  
    case '4':
     break;  
